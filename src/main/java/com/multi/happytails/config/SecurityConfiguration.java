@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -50,23 +51,23 @@ public class SecurityConfiguration {
 //                        .anyRequest().authenticated()
                         .anyRequest().permitAll()
                 );
-//        http
-//                .formLogin(form -> form
-//                        .loginPage(("/member/login"))
-//                        .usernameParameter("username")
-//                        .passwordParameter("password")
-//                        .defaultSuccessUrl("/main/menubar", true)
-//                        .failureForwardUrl("/error/login")
-//                ).headers(headers -> headers
-//                        .frameOptions().sameOrigin());
-//        http
-//                .logout(logout -> logout
-//                        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
-//                        .deleteCookies("JSESSIONID")
-//                        .invalidateHttpSession(true)
-//                        .logoutSuccessUrl("/"))
-//                .exceptionHandling((exception) -> exception.accessDeniedPage("/error/denied")
-//                );
+        http
+                .formLogin(form -> form
+                        .loginPage(("/member/login"))
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .defaultSuccessUrl("/", true)
+                        .failureForwardUrl("/error/login")
+                ).headers(headers -> headers
+                        .frameOptions().sameOrigin());
+        http
+                .logout(logout -> logout
+                        .logoutRequestMatcher(new AntPathRequestMatcher("/member/logout"))
+                        .deleteCookies("JSESSIONID")
+                        .invalidateHttpSession(true)
+                        .logoutSuccessUrl("/"))
+                .exceptionHandling((exception) -> exception.accessDeniedPage("/error/denied")
+                );
 
         return http.build();
     }

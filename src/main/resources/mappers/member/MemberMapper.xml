@@ -9,16 +9,13 @@
         <result column="USER_ID" property="id" />
         <result column="USER_PASSWORD" property="pwd" />
         <result column="USER_NAME" property="name" />
-        <result column="USER_PROFILE_IMG_PATH" property="profileIMG" />
         <result column="USER_NICKNAME" property="nickname" />
         <result column="USER_AGE" property="age" />
         <result column="USER_GENDER" property="gender" />
         <result column="USER_TEL" property="tel" />
-        <result column="USER_MANNER_COUNT" property="mannerCount" />
-        <result column="USER_BAN_COUNT" property="banCount" />
         <result column="USER_SIGNUP_DATE" property="signupDate" />
         <result column="USER_DELETE_ACCOUNT_DATE" property="deleteDate" />
-        <result column="USER_DELETE_ACCOUNT" property="deleteAccount" />
+        <result column="USER_DELETE_ACCOUNT_FLAG" property="deleteAccountFlag" />
         <result column="USER_ROLE" property="role" />
     </resultMap>
 
@@ -28,16 +25,13 @@
         USER_ID,
         USER_PASSWORD,
         USER_NAME,
-        USER_PROFILE_IMG_PATH,
         USER_NICKNAME,
         USER_AGE,
         USER_GENDER,
         USER_TEL,
-        USER_MANNER_COUNT,
-        USER_BAN_COUNT,
         USER_SIGNUP_DATE,
         USER_DELETE_ACCOUNT_DATE,
-        USER_DELETE_ACCOUNT,
+        USER_DELETE_ACCOUNT_FLAG,
         USER_ROLE
         FROM TB_USERS
         WHERE USER_ID = #{memberId}

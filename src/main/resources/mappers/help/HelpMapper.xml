@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.multi.happytails.help.model.dao.HelpMapper">
+
+    <select id="helpCategorySelectList">
+        SELECT * FROM TB_HELP_CATEGORY
+    </select>
+
+    <insert id="inquiryInsert">
+        INSERT INTO TB_INQUIRY (HELP_CATEGORY_CODE, WRITER_ID, TITLE, CONTENT)
+        VALUES (#{helpCategoryCode}, #{writerId}, #{title}, #{content})
+    </insert>
+
+    <select id="getCurrentInquiryNo">
+        SELECT INQUIRY_NO
+        FROM TB_INQUIRY
+        ORDER BY INQUIRY_NO DESC
+        LIMIT 1
+    </select>
+</mapper>

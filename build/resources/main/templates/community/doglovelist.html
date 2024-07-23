@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Doglove 게시판 목록</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h1>내 새꾸 자랑 게시판</h1>
+
+<!-- 정렬 버튼 -->
+<div>
+    <form action="/community/doglove" method="get" style="display:inline;">
+        <input type="hidden" name="sort" value="date"/>
+        <button type="submit" th:text="${sort == 'date' ? '최신순(현재)' : '최신순'}"></button>
+    </form>
+    <form action="/community/doglove" method="get" style="display:inline;">
+        <input type="hidden" name="sort" value="recommendCount"/>
+        <button type="submit" th:text="${sort == 'recommendCount' ? '추천순(현재)' : '추천순'}"></button>
+    </form>
+</div>
+
+<!-- 게시글 목록을 표시하는 테이블 -->
+<table border="1">
+    <thead>
+    <tr>
+        <th>게시글 번호</th>
+        <th>작성자</th>
+        <th>제목</th>
+        <th>내용</th>
+        <th>작성 시간</th>
+        <th>추천 수</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="doglove : ${dogloves}">
+        <td th:text="${doglove.dogloveNo}"></td>
+        <td th:text="${doglove.userId}"></td>
+        <td>
+            <a th:href="@{/community/doglove/{dogloveNo}(dogloveNo=${doglove.dogloveNo})}" th:text="${doglove.title}"></a>
+        </td>
+        <td th:text="${doglove.content}"></td>
+        <td th:text="${#temporals.format(doglove.createTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${doglove.recommendCount}"></td>
+    </tr>
+    </tbody>
+</table>
+
+<a href="/community/doglove/create">새 글 작성하기</a>
+<a href="/community">홈으로 돌아가기</a>
+</body>
+</html>

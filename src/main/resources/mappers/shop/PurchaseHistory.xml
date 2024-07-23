@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.multi.happytails.shop.model.dao.PurchaseHistoryDAO">
+
+    <resultMap id="PurchaseHistoryResultMap" type="com.multi.happytails.shop.model.dto.PurchaseHistoryDTO">
+        <id column="PURCHASE_NO" property="no" />
+        <result column="ID" property="id" />
+        <result column="DELIVERY_ADDRESS" property="address" />
+        <result column="REQUIREMENTS" property="requirements" />
+        <result column="GOODS_NO" property="goodsNo" />
+        <result column="PURCHASE_QUANTITY" property="quantity" />
+        <result column="PURCHASE_DATE" property="PurchaseDate" />
+    </resultMap>
+
+    <select id="findMemberById" resultMap="PurchaseHistoryResultMap">
+
+    </select>
+
+</mapper>

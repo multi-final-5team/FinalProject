@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.multi.happytails.community.reply.model.dao.ReplyMapper">
+
+<!--    &lt;!&ndash; 댓글 생성 &ndash;&gt;
+    <insert id="insertReply" parameterType="com.multi.happytails.community.reply.model.dto.ReplyDTO">
+        INSERT INTO TB_COMMUNITY_REPLY (
+        COMMUNITY_CATEGORY_CODE,
+        FOREIGN_NO,
+        WRITER_ID,
+        CONTENT,
+        CREATE_DATE
+        ) VALUES (
+        #{communityCategoryCode},
+        #{foreignNo},
+        #{writerId},
+        #{content},
+        #{createDate}
+        )
+    </insert>
+
+    &lt;!&ndash; 댓글 조회 &ndash;&gt;
+    <select id="getReply" parameterType="int" resultType="com.multi.happytails.community.reply.model.dto.ReplyDTO">
+        SELECT
+        COMMUNITY_REPLY_NO,
+        COMMUNITY_CATEGORY_CODE,
+        FOREIGN_NO,
+        WRITER_ID,
+        CONTENT,
+        CREATE_DATE
+        FROM TB_COMMUNITY_REPLY
+        WHERE COMMUNITY_REPLY_NO = #{communityReplyNo}
+    </select>
+
+    &lt;!&ndash; 댓글 삭제 &ndash;&gt;
+    <delete id="deleteReply" parameterType="int">
+        DELETE FROM TB_COMMUNITY_REPLY
+        WHERE COMMUNITY_REPLY_NO = #{communityReplyNo}
+    </delete>
+
+    &lt;!&ndash; 모든 댓글 조회 &ndash;&gt;
+    <select id="selectAllReply" resultType="com.multi.happytails.community.reply.model.dto.ReplyDTO">
+        SELECT
+        COMMUNITY_REPLY_NO,
+        COMMUNITY_CATEGORY_CODE,
+        FOREIGN_NO,
+        WRITER_ID,
+        CONTENT,
+        CREATE_DATE
+        FROM TB_COMMUNITY_REPLY
+    </select>-->
+</mapper>

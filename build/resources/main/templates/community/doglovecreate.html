@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>게시글 작성</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            let imageFiles = [];
+            $('#imageInput').on('change', function(event) {
+                console.log('실행');
+                var file = event.target.files[0];
+                if (file && file.type.startsWith('image/')) {
+                    var reader = new FileReader();
+                    reader.onload = function(e) {
+                        $('#imgAddDiv').append('<img src="' + e.target.result + '" alt="Selected Image" width="100px" height="100px">');
+                    }
+                    imageFiles.push(file);
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('이미지 파일을 선택해주세요');
+                }
+            });
+
+            // 폼 서브밋 Start
+            $('#submitForm').submit(function(event) {
+                event.preventDefault();
+
+                let title = $('#title').val();
+                let content = $('#content').val();
+                let formData = new FormData();
+                formData.append('title', title);
+                formData.append('content', content);
+
+                for (let i = 0; i < imageFiles.length; i++) {
+                    formData.append('imageFiles', imageFiles[i]);
+                }
+
+                $.ajax({
+                    url: "/community/doglove",
+                    processData: false,
+                    contentType: false,
+                    type: 'POST',
+                    data: formData,
+                    success: function(data) {
+                    location.href = '/community/doglove'; }
+                });
+            });
+            // 폼 서브밋 End
+        });
+    </script>
+</head>
+<body>
+<h1>게시글 작성</h1>
+
+<form id="submitForm" action="/community/doglove" method="post" enctype="multipart/form-data">
+    <div>
+        <label for="title">제목:</label>
+        <input type="text" id="title" name="title" required>
+    </div>
+    <div>
+        <label for="content">내용:</label>
+        <textarea id="content" name="content" rows="5" required></textarea>
+    </div>
+    <div>
+        <label for="imageInput">이미지:</label>
+        <input type="file" id="imageInput">
+    </div>
+    <div>
+        <button type="submit">저장</button>
+    </div>
+    <div id="imgAddDiv"></div>
+</form>
+
+<a href="/community/doglove">목록으로 돌아가기</a>
+</body>
+</html>

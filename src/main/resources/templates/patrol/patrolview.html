@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+</head>
+<body>
+
+<form id="patrolform" method="post">
+
+    <label>강아지 이름</label><br>
+    <input type="text" id="name" name="name" ><br>
+
+    <label>나이</label><br>
+    <input type="number" id="age" name="age"><br>
+
+    <label>품종</label><br>
+    <input type="text" id="breed" name="breed"><br>
+
+    <label>주소</label><br>
+    <input type="text" id="location" name="location"><br>
+
+    <button type="submit" formaction="parol/patrolUpdate">수정</button><br>
+    <button type="submit" formaction="parol/patrolDelete">삭제</button>
+
+</form>
+
+<script>
+    $(document).ready(function(){
+    $.ajax({
+    type:'get',
+    url: "/patrol/findOnePatrol",
+    success : function(data){
+
+        $('#name').val(data.name);
+        $('#age').val(data.age);
+        $('#breed').val(data.breed);
+        $('#location').val(data.location);
+
+    },
+    error: function (xhr){
+        console.log(xhr);
+    }
+    }); // $.ajax()
+}
+</script>
+
+</body>
+</html>

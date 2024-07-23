@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.multi.happytails.shop.model.dao.CartDAO">
+
+    <resultMap id="cartResultMap" type="com.multi.happytails.shop.model.dto.CartDTO">
+        <id column="NO" property="no" />
+        <result column="ID" property="id" />
+        <result column="GOODS_NO" property="goodsNo" />
+        <result column="PURCHASE_QUANTITY" property="purchaseQuantity" />
+    </resultMap>
+
+    <select id="findMemberById" resultMap="cartResultMap">
+    </select>
+
+</mapper>

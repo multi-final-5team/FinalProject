@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sales Details</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="mb-4">Sales Details</h1>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title" th:text="${salesDetails.name}">Product Name</h5>
+            <h6 class="card-subtitle mb-2 text-muted" th:text="'Category: ' + ${salesDetails.categoryCode}">Category Code</h6>
+            <p class="card-text"><strong>ID:</strong> <span th:text="${salesDetails.id}">ID</span></p>
+            <p class="card-text"><strong>Address:</strong> <span th:text="${salesDetails.address}">Address</span></p>
+
+            <div th:if="${uploadDtoList != null && !uploadDtoList.isEmpty()}">
+                <div>
+                    <h2>대표 이미지</h2>
+                    <img th:src="@{/images/S/{file}(file=${uploadDtoList[0].storedFileName})}" alt="First Image">
+                </div>
+
+            <p class="card-text"><strong>Price:</strong> <span th:text="${salesDetails.price}">Price</span></p>
+            <p class="card-text"><strong>Quantity:</strong> <span th:text="${salesDetails.quantity}">Quantity</span></p>
+            <p class="card-text"><strong>Content:</strong> <span th:text="${salesDetails.content}">Content</span></p>
+
+                <h2>상세 이미지</h2>
+                <ul>
+                    <li th:each="uploadDto, iterStat : ${uploadDtoList}" th:if="${iterStat.index > 0}">
+                        <img th:src="@{/images/S/{file}(file=${uploadDto.storedFileName})}" alt="Image">
+                    </li>
+                </ul>
+            </div>
+                <!--            <p class="card-text"><strong>Create Date:</strong> <span th:text="${#dates.format(salesDetails.createDate, 'yyyy-MM-dd HH:mm:ss')}">Create Date</span></p>-->
+<!--            <p class="card-text"><strong>Update Date:</strong> <span th:text="${#dates.format(salesDetails.updateDate, 'yyyy-MM-dd HH:mm:ss')}">Update Date</span></p>-->
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

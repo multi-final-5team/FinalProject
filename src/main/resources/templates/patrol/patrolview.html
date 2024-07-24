@@ -8,10 +8,19 @@
 </head>
 <body>
 
-<form id="patrolform" method="post">
+<form id="formId" method="post" enctype="multipart/form-data" >
+
+    <div id="image_container">
+        <!-- 이미지 들어가는곳 -->
+    </div>
+
+    <input type="file" id="inputFile" name="inputFile"><br>
+
+    <input type="hidden" id="patrolNo" name="patrolNo">
+    <input type="hidden" id="userNo" name="userNo">
 
     <label>강아지 이름</label><br>
-    <input type="text" id="name" name="name" ><br>
+    <input type="text" id="name" name="name"><br>
 
     <label>나이</label><br>
     <input type="number" id="age" name="age"><br>
@@ -22,18 +31,27 @@
     <label>주소</label><br>
     <input type="text" id="location" name="location"><br>
 
-    <button type="submit" formaction="parol/patrolUpdate">수정</button><br>
-    <button type="submit" formaction="parol/patrolDelete">삭제</button>
+    <button type="button" id="formUpdateSubmitBtn">수정</button>
+    <br>
+    <button type="button" id="formDeleteSubmitBtn">삭제</button>
 
 </form>
 
 <script>
-    $(document).ready(function(){
+
+    $(document).ready(function() {
+
+    var urlParams = new URL(location.href).searchParams;
+    var pnum = urlParams.get('patrolNo');
+
     $.ajax({
     type:'get',
-    url: "/patrol/findOnePatrol",
+    url: "/patrol/findOnePatrolByPatrolNo",
+    data: {parolNo : pnum},
     success : function(data){
 
+        $('#patrolNo').val(data.patrolNo);
+        $('#userNo').val(data.userNo);
         $('#name').val(data.name);
         $('#age').val(data.age);
         $('#breed').val(data.breed);
@@ -44,7 +62,44 @@
         console.log(xhr);
     }
     }); // $.ajax()
-}
+
+
+
+
+        $('#formUpdateSubmitBtn').click(function(){
+
+            let formData = new FormData($("#formId")[0]);
+
+            $.ajax({
+                url : "/patrol/patrolUpdate",
+                processData : false,
+                contentType : false,
+                type : 'POST',
+                data : formData,
+                success : function(data) {
+                    location.replace("/patrol/patrol");
+                }
+            });
+        });
+        // 폼 업데이트 서브밋 End
+
+        $('#formDeleteSubmitBtn').click(function(){
+
+            let formData = new FormData($("#formId")[0]);
+
+            $.ajax({
+                url : "/patrol/patrolDelete",
+                processData : false,
+                contentType : false,
+                type : 'POST',
+                data : formData,
+                success : function(data) {
+                    location.replace("/patrol/patrol");
+                }
+            });
+        });
+        // 폼 삭제 서브밋 End
+    });
 </script>
 
 </body>

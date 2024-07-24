@@ -9,8 +9,8 @@
         <result column="SALES_CATEGORY" property="salesStatus" />
     </resultMap>
 
-    <select id="findMemberById" resultMap="salesCategoryResultMap">
-
+    <select id="categoryList" resultMap="salesCategoryResultMap">
+        SELECT * FROM TB_SALES_CATEGORY ;
     </select>
 
 </mapper>

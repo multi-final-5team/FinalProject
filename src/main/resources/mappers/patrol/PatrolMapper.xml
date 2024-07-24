@@ -11,25 +11,33 @@
     </insert>
 
     <select id="findAllPatrol">
-        SELECT *
+        SELECT patrol_no AS patrolNo, user_no AS userNo, name, age, breed, location
         FROM tb_patrol
     </select>
 
     <select id="findOnePatrol">
-        SELECT *
+        SELECT patrol_no AS patrolNo, user_no AS userNo, name, age, breed, location
         FROM tb_patrol
-        WHERE user_no = #{userNo}
+        WHERE user_no = #{userNo} AND name = #{name}
+    </select>
+
+    <select id="findOnePatrolByPatrolNo">
+        SELECT patrol_no AS patrolNo, user_no AS userNo, name, age, breed, location
+        FROM tb_patrol
+        WHERE patrol_no = #{patrolNo};
     </select>
 
     <update id="patrolUpdate">
         UPDATE tb_patrol
         SET  name=#{name}, age=#{age}, breed=#{breed}, location=#{location}
-        WHERE patrol_no=#{parolNo};
+        WHERE patrol_no=#{patrolNo};
     </update>
 
     <delete id="patrolDelete">
         DELETE FROM tb_patrol
-        WHERE patrol_no=#{parolNo};
+        WHERE patrol_no=#{patrolNo};
     </delete>
+
+
 
 </mapper>

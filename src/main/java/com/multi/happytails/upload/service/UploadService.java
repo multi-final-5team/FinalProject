@@ -56,7 +56,6 @@ public class UploadService {
         return uploadMapper.uploadDelete(imageNo);
     }
 
-    // 테스트 x
     public int uploadUpdate(long imageNo, MultipartFile multipartFile) {
         UploadDto uploadDto = uploadMapper.uploadSelect(imageNo);
         uploadDto.setFile(multipartFile);

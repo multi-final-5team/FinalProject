@@ -32,6 +32,7 @@ public class CustomUser extends User {
 
     public CustomUser(MemberDTO member, Collection<? extends GrantedAuthority> authorities) {
         super(member.getId(), member.getPwd(), authorities);
+        setDetails(member);
     }
 
     private void setDetails(MemberDTO member){

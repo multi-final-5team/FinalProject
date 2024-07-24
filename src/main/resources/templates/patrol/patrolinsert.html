@@ -3,12 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
 <body>
-<form action="makepatrol" method="post">
+<form action="makepatrol" method="post" enctype="multipart/form-data" id="formId">
+
+    <div id="image_container">
+        <!-- 이미지 들어가는곳 -->
+    </div>
+
+    <input type="file" id="inputFile" name="inputFile"><br>
 
     <label>강아지 이름</label><br>
-    <input type="text" id="name" name="name" ><br>
+    <input type="text" id="name" name="name"><br>
 
     <label>나이</label><br>
     <input type="number" id="age" name="age"><br>
@@ -19,9 +27,55 @@
     <label>주소</label><br>
     <input type="text" id="location" name="location"><br>
 
-    <input type="submit" value="신청">
+    <input type="button" id="formSubmitBtn" value="신청">
 
 </form>
+
+<script>
+    $(document).ready(function() {
+
+        // 이미지 road Start
+        let imageFiles = [];
+        $('#inputFile').on('change', function(event) {
+            console.log('실행');
+            var file = event.target.files[0];
+            if (file && file.type.startsWith('image/')) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                $('#image_container').append('<img src="' + e.target.result + '" alt="Selected Image" width="100px" height="100px">');
+                }
+            imageFiles.push(file);
+            reader.readAsDataURL(file);
+            }
+            else {
+                alert('이미지 파일을 선택해주세요');
+            }
+           });
+        // 이미지 road End
+        // 폼 서브밋 Start
+
+        $('#formSubmitBtn').click(function(){
+
+            let formData = new FormData($("#formId")[0]);
+
+            for (let i = 0; i < imageFiles.length;i++) {
+                formData.append('imageFiles',imageFiles[i]);
+            }
+
+            $.ajax({
+                url : "/patrol/makepatrol",
+                processData : false,
+                contentType : false,
+                type : 'POST',
+                data : formData,
+                success : function(data) {
+                    location.replace("/patrol/patrol");
+                }
+            });
+        });
+        // 폼 서브밋 End
+    });
+</script>
 
 </body>
 </html>

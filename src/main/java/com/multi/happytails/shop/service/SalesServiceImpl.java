@@ -24,8 +24,15 @@ public class SalesServiceImpl implements SalesService {
     }
 
     @Override
-    public List<SalesGoodsDTO> salesList() {
-        return salesGoodsDAO.salesList();
+    public List<SalesGoodsDTO> salesList(int page, int pageSize) {
+        int offset = (page - 1) * pageSize;
+        return salesGoodsDAO.salesList(offset, pageSize);
+    }
+
+    @Override
+    public List<SalesGoodsDTO> salesListBusiness(int page, int pageSize, String id) {
+        int offset = (page - 1) * pageSize;
+        return salesGoodsDAO.salesListBusiness(offset, pageSize, id);
     }
 
     @Override
@@ -36,5 +43,15 @@ public class SalesServiceImpl implements SalesService {
     @Override
     public SalesGoodsDTO selectSales(SalesGoodsDTO salesGoodsDTO) {
         return salesGoodsDAO.selectSales(salesGoodsDTO);
+    }
+
+    @Override
+    public int getSalesNo() {
+        return salesGoodsDAO.getSalesNo();
+    }
+
+    @Override
+    public int salesPageCount() {
+        return salesGoodsDAO.salesPageCount();
     }
 }

@@ -10,9 +10,15 @@ public interface SalesService {
 
     void updateSales(SalesGoodsDTO salesGoodsDTO);
 
-    List<SalesGoodsDTO> salesList();
+    List<SalesGoodsDTO> salesList(int page, int pageSize);
+
+    List<SalesGoodsDTO> salesListBusiness(int page, int pageSize, String id);
 
     void deleteSales(SalesGoodsDTO salesGoodsDTO);
 
     SalesGoodsDTO selectSales(SalesGoodsDTO salesGoodsDTO);
+
+    int getSalesNo();
+
+    int salesPageCount();
 }

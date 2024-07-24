@@ -7,6 +7,9 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
 </head>
 <body>
+<h1>순찰대 목록</h1>
+
+<button id="goPatrolInsertBtn">생성</button>
 
 <div class="patroldiv" id="patroldiv">
 
@@ -16,36 +19,67 @@
 
 <script>
 
+
     $(document).ready(function(){
+
         $.ajax({
         type:'get',
         url: "/patrol/findAllPatrol",
-        success : function(data){
+        success : function(dto){
+            var data = dto.list;
+            var imgs = dto.uploadDtos;
 
             for(let index in data){
+                var img;
+                 for(let indexImg in imgs){
+                    if(imgs[indexImg].foreignNo == data[index].patrolNo){
+                        img = imgs[indexImg].storedFileName;
+                    }
+                 }
 
                 $('#patroldiv').append(
+
                     $('<div>').prop({
                         id: 'patrol' + index,
                         className: 'patrol'
-                        }).attr("onclick", "")
+                        }).attr("onclick", "gopatrol(" + data[index].patrolNo + ")")
                     );
+
+                    $('#' + 'patrol' + index).append(
+                        $('<div>').prop({
+                            id: 'divimg' + index,
+                            className: 'patrol'
+                        })
+                    );
+                    $('#divimg' + index).append(
+                        '<img src="/images/Z/' + img + '">'
+                    );
+
                     $('#' + 'patrol' + index).append(
                         '<b>' + data[index].name + '</b><br>'
                     );
+
                     $('#' + 'patrol' + index).append(
                         '<sub>' + data[index].age + '</sub><br>'
                     );
+
                     $('#' + 'patrol' + index).append(
                         '<sub>' + data[index].breed + '</sub>'
                     );
             }
-
         },
         error: function (xhr){
             console.log(xhr);
         }
         }); // $.ajax()
+
+        $('#goPatrolInsertBtn').click(function(){
+            location.href = "/patrol/patrolinsert";
+        });
+    });
+
+    function gopatrol(patrolno) {
+         location.href = "/patrol/patrolview?patrolNo="+patrolno;
     }
 </script>
 

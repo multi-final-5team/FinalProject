@@ -22,6 +22,7 @@ public class MemberDTO {
     private String tel;
     private Timestamp signupDate;
     private Timestamp deleteDate;
+//    private String deleteAccount;
     private char deleteAccountFlag;
     private String role;
 

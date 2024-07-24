@@ -15,6 +15,7 @@
         <result column="USER_TEL" property="tel" />
         <result column="USER_SIGNUP_DATE" property="signupDate" />
         <result column="USER_DELETE_ACCOUNT_DATE" property="deleteDate" />
+<!--        <result column="USER_DELETE_ACCOUNT" property="deleteAccount" />-->
         <result column="USER_DELETE_ACCOUNT_FLAG" property="deleteAccountFlag" />
         <result column="USER_ROLE" property="role" />
     </resultMap>
@@ -36,5 +37,47 @@
         FROM TB_USERS
         WHERE USER_ID = #{memberId}
     </select>
+
+    <select id="findUserByDetails" resultMap="memberResultMap">
+        SELECT
+            USER_NO,
+            USER_ID,
+            USER_PASSWORD,
+            USER_NAME,
+            USER_NICKNAME,
+            USER_AGE,
+            USER_GENDER,
+            USER_TEL,
+            USER_SIGNUP_DATE,
+            USER_DELETE_ACCOUNT_DATE,
+            USER_DELETE_ACCOUNT_FLAG,
+            USER_ROLE
+        FROM TB_USERS
+        WHERE USER_NAME = #{name} AND USER_TEL = #{tel}
+    </select>
+
+    <update id="updatePassword">
+        UPDATE TB_USERS SET USER_PASSWORD = #{newPassword} WHERE USER_ID = #{id}
+    </update>
+
+    <insert id="insertMember">
+        INSERT INTO TB_USERS (
+            USER_ID,
+            USER_PASSWORD,
+            USER_NAME,
+            USER_NICKNAME,
+            USER_AGE,
+            USER_GENDER,
+            USER_TEL
+        ) VALUES (
+             #{id},
+             #{pwd},
+             #{name},
+             #{nickname},
+             #{age},
+             #{gender},
+             #{tel}
+        )
+    </insert>
 
 </mapper>

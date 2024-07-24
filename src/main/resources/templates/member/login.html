@@ -2,14 +2,11 @@
 <html>
 <head>
     <meta charset="UTF-8">
-
-    <script
-            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script
-            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script
-            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-    <title>Game Gather</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+<!--    <link rel="stylesheet" href="/css/member/login.css">-->
+    <title>HappyTails</title>
     <style>
         h5 {
             color: red;
@@ -23,7 +20,7 @@
 </head>
 <body>
 <br>
-<h1 align="center">Game Gather</h1>
+<h1 align="center">HappyTails</h1>
 
 <br><br>
 <Br>
@@ -36,8 +33,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width:120px">아이디</span>
                         </div>
-                        <input type="text" class="form-control" name="username">
-                        <!-- 시큐리티에서는 반드시 username(소문자)으로 name값 설정 , 시큐리티 내부에서 만들어놓은 핸들러 메소드를 사용하기 때문-->
+                        <input type="text" class="form-control" name="username"><!-- 시큐리티에서는 반드시 username(소문자)으로 name값 설정 , 시큐리티 내부에서 만들어놓은 핸들러 메소드를 사용하기 때문-->
                     </div>
                 </td>
             </tr>
@@ -47,8 +43,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text" style="width:120px">비밀번호</span>
                         </div>
-                        <input type="password" class="form-control" name="password">
-                        <!-- 시큐리티에서는 반드시 password(소문자)으로 name값 설정 -->
+                        <input type="password" class="form-control" name="password"><!-- 시큐리티에서는 반드시 password(소문자)으로 name값 설정 -> 필터가 자동으로 "username"이라는 이름의 파라미터를 찾아 처리.-->
                     </div>
                 </td>
             </tr>
@@ -57,20 +52,23 @@
     <div>
         <input type="submit" value="login">
         <br>
-        <a href="/member/signup"><button type="button">Sign Up</button></a>
+        <a href="/member/findUserIdForm"><button type="button">아이디 찾기</button></a>
         <br>
+        <a href="/member/findUserPwdForm"><button type="button">비밀번호 변경</button></a>
+        <br>
+        <a href="/member/signup"><button type="button">회원가입</button></a>
+
     </div>
 
     <script>
         $(function(){
-            $("input[name=userId]").focus();
+            $("input[name=username]").focus(); // 아이디 입력 필드에 초기 포커스
 
             $("input[type=submit]").click(function(){
-                $("#loginForm").submit();
+                $("#loginForm").submit(); // 로그인 버튼 클릭 시 폼 제출
             });
         })
     </script>
-
 </div>
 </body>
 </html>

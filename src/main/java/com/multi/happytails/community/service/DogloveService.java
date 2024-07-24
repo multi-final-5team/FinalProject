@@ -17,6 +17,10 @@ public class DogloveService {
     @Autowired
     private DogloveDAO dogloveDAO;
 
+    public DogloveService(DogloveDAO dogloveDAO) {
+        this.dogloveDAO = dogloveDAO;
+    }
+
     public List<DogloveDTO> findAll() {
         return dogloveDAO.findAll("date");
     }
@@ -33,20 +37,19 @@ public class DogloveService {
         return dogloveDAO.findById(dogloveNo);
     }
 
-/*    public Long dogloveCreate(DogloveDTO dogloveDTO) {
-
-        dogloveDTO.setCategoryCode(CATEGORY_CODE);
-        dogloveDAO.dogloveCreate(dogloveDTO);
-        return dogloveDTO.getDogloveNo();
-    }*/
-
     public long dogloveInsert(DogloveDTO dogloveDTO) {
         dogloveDTO.setCategoryCode(CATEGORY_CODE);
         dogloveDAO.dogloveInsert(dogloveDTO);
         return dogloveDAO.getCurrentDogloveNo();
     }
 
-    public void addRecommendation(Long dogloveNo) {
+    public void incrementRecommendCount(Long dogloveNo) {
         dogloveDAO.incrementRecommendCount(dogloveNo);
     }
+    // 게시글 추천 수 감소
+    public void decrementRecommendCount(Long dogloveNo) {
+        dogloveDAO.decrementRecommendCount(dogloveNo);
+    }
+
+
 }

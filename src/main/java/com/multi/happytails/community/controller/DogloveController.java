@@ -17,7 +17,21 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.security.Principal;
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
+/**
+ * packageName    : com.multi.happytails.community.controller
+ * fileName       : DogloveController
+ * author         : Nayoung Yeo
+ * date           : 2024-07-24
+ * description    : Doglovecontroller.
+ * ===========================================================
+ * DATE              AUTHOR             NOTE
+ * -----------------------------------------------------------
+ * 2024-07-24        Nayoung Yeo       최초 생성
+ */
 
 @Controller
 @RequestMapping("/community")
@@ -30,18 +44,50 @@ public class DogloveController {
     @Autowired
     private UploadService uploadService;
 
+    /**
+     * 이미지 코드
+     */
     final String IMAGE_CODE = "L";
 
+    /**
+     * 게시판 카테고리 코드
+     */
     final String categoryCode = "DOGLOVE_CODE";
 
 
-    // list.html 보여줌
+    /**
+     * methodName : list
+     * author : Nayoung Yeo
+     * description :
+     *
+     * @return string
+     */
+
     @GetMapping
     public String list() {
         return "community/list";
     }
 
-    // 게시글 목록
+    /**
+     * Instantiates a new Doglove controller.
+     *
+     * @param dogloveService the doglove service
+     */
+    public DogloveController(DogloveService dogloveService) {
+        this.dogloveService = dogloveService;
+
+    }
+
+    /**
+     * methodName : dogloveList
+     * author : Nayoung Yeo
+     * description :
+     *
+     * @param sort
+     * @param model
+     * @return string
+     */
+// 게시글 목록
     @GetMapping("/doglove")
     public String dogloveList(
             @RequestParam(value = "sort", defaultValue = "date") String sort,
@@ -59,7 +105,16 @@ public class DogloveController {
         return "community/doglovelist";
     }
 
-    // 게시글 상세 페이지
+    /**
+     * methodName : dogloveDetail
+     * author : Nayoung Yeo
+     * description :
+     *
+     * @param dogloveNo no
+     * @param model
+     * @return string
+     */
+// 게시글 상세 페이지
     @GetMapping("/doglove/{dogloveNo}")
     public String dogloveDetail(@PathVariable("dogloveNo") Long dogloveNo, Model model) {
         DogloveDTO doglove = dogloveService.findById(dogloveNo);
@@ -74,12 +129,30 @@ public class DogloveController {
 
     }
 
+    /**
+     * methodName : dogloveCreateForm
+     * author : Nayoung Yeo
+     * description :
+     *
+     * @return string
+     */
     @GetMapping("/doglove/create")
     public String dogloveCreateForm() {
         return "community/doglovecreate";
     }
 
-    //게시글 저장
+    /**
+     * methodName : savePost
+     * author : Nayoung Yeo
+     * description :
+     *
+     * @param imageFiles   dto
+     * @param dogloveDTO     files
+     * @param session
+     * @param principal
+     * @return string
+     */
+
     @PostMapping("/doglove")
     public String savePost(@ModelAttribute DogloveDTO dogloveDTO,
                            @RequestParam("imageFiles") @Nullable List<MultipartFile> imageFiles,
@@ -95,12 +168,10 @@ public class DogloveController {
         //게시판 카테고리 코드
         dogloveDTO.setCategoryCode(categoryCode);
         dogloveDTO.setCreateTime(LocalDateTime.now());
-        System.out.println("---------------------------------------------------" + imageFiles); //null
 
         UploadDto uploadDto = new UploadDto();
         uploadDto.setForeignNo(dogloveService.dogloveInsert(dogloveDTO));
 
-        //이미지 카테고리 코드
         uploadDto.setCategoryCode(IMAGE_CODE); // 이미지 카테고리 코드
         if (imageFiles != null && !imageFiles.isEmpty()) {
             for (int i = 0; i < imageFiles.size(); i++) {
@@ -111,12 +182,22 @@ public class DogloveController {
         return "redirect:/community/doglove";
     }
 
+    /**
+     * methodName : recommendPost
+     * author : Nayoung Yeo
+     * description :
+     *
+     * @param dogloveNo
+     * @param session
+     * @return string
+     */
 
-/*
     @PostMapping("/doglove/{dogloveNo}/recommend")
-    public String recommendPost(@PathVariable("dogloveNo") Long dogloveNo) {
-        dogloveService.addRecommendation(dogloveNo);
-        return "redirect:/community/doglove";
+    public String recommendPost(@PathVariable("dogloveNo") Long dogloveNo, HttpSession session) {
+        // 추천 수 증가
+        dogloveService.incrementRecommendCount(dogloveNo);
 
-    }*/
+        // 게시글 상세 페이지로 리다이렉트
+        return "redirect:/community/doglove/" + dogloveNo;
+    }
 }

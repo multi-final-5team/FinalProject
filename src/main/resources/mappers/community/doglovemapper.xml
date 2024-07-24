@@ -85,9 +85,15 @@
 
     <!-- 추천 수 증가 -->
     <update id="incrementRecommendCount">
-        UPDATE TB_COMMUNITY_DOGLOVE
-        SET recommendCount = recommendCount + 1
+        UPDATE TB_DOGLOVE
+        SET RECOMMEND_COUNT = RECOMMEND_COUNT + 1
         WHERE DOGLOVE_NO = #{dogloveNo}
     </update>
 
+    <!-- 추천 수 감소 -->
+    <update id="decrementRecommendCount">
+        UPDATE TB_DOGLOVE
+        SET RECOMMEND_COUNT = RECOMMEND_COUNT - 1
+        WHERE DOGLOVE_NO = #{dogloveNo}
+    </update>
 </mapper>

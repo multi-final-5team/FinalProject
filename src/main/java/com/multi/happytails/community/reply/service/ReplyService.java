@@ -1,37 +1,52 @@
 package com.multi.happytails.community.reply.service;
 
-import com.multi.happytails.community.reply.model.dao.ReplyMapper;
+import com.multi.happytails.community.reply.model.dao.ReplyDAO;
 import com.multi.happytails.community.reply.model.dto.ReplyDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Service
 public class ReplyService {
 
     @Autowired
-    private ReplyMapper replyMapper;
-
+    private static ReplyDAO replyDAO;
 
     /**
      * 댓글 추가
-     * @param replyDTO 댓글 정보
+     * @param replyDTO 댓글 데이터
      */
-    public void addReply(ReplyDTO replyDTO) {
-        if (replyDTO.getCommunityCategoryCode() == null || replyDTO.getCommunityCategoryCode().isEmpty()) {
-            replyDTO.setCommunityCategoryCode("L");
-            replyMapper.insertReply(replyDTO);
-
-        }
+    public static void addReply(ReplyDTO replyDTO) {
+        LocalDateTime now = LocalDateTime.now();
+        replyDTO.setCreatedDate(now);
+        replyDTO.setUpdatedDate(now);
+        replyDAO.insertReply(replyDTO);
     }
 
     /**
-     * 댓글 목록 조회
-     @param columnNo 게시글 번호
-     @return 댓글 목록
+     * 댓글을 ID로 조회
+     * @param replyNo 댓글 ID
+     * @return 댓글 데이터
      */
-    public List<ReplyDTO> getRepliesByColumnNo(int columnNo) {
-        return replyMapper.selectReplyByColumnNo(columnNo);
+    public static ReplyDTO getReplyById(int replyNo) {
+        return replyDAO.selectReplyById(replyNo);
+    }
+
+    /**
+     * 댓글 업데이트.
+     * @param replyDTO 댓글 데이터
+     */
+    public static void updateReply(ReplyDTO replyDTO) {
+        replyDTO.setUpdatedDate(LocalDateTime.now());
+        replyDAO.updateReply(replyDTO);
+    }
+
+    /**
+     * 댓글 ID로 삭제
+     * @param replyNo 댓글 ID
+     */
+    public static void deleteReply(int replyNo) {
+        replyDAO.deleteReply(replyNo);
     }
 }

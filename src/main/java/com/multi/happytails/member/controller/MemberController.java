@@ -16,6 +16,18 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Map;
 
+/**
+ * packageName    : com.multi.happytails.member.controller
+ * fileName       : MemberController
+ * author         : EUN SOO
+ * date           : 2024-07-24
+ * description    : 회원, 명예의 전당, SNS 공유 관련 기능 처리
+ * ===========================================================
+ * DATE              AUTHOR             NOTE
+ * -----------------------------------------------------------
+ * 2024-07-24        EUN SOO       최초 생성
+ */
+
 @Controller
 @RequestMapping("/member")
 public class MemberController {
@@ -26,15 +38,33 @@ public class MemberController {
     @Autowired
     private UploadService uploadService;
 
+    /**
+     * methodName : login
+     * author : Eunsoo Lee
+     * description : 로그인
+     */
     @RequestMapping("/login")
     public void login() {
     }
 
+    /**
+     * methodName : logout
+     * author : Eunsoo Lee
+     * description : 로그아웃
+     *
+     * @return string
+     */
     @RequestMapping("/logout")
     public String logout() {
         return "redirect:/member/login";
     }
 
+    /**
+     * Gets current user.
+     *
+     * @param customUser the custom user
+     * @return the current user
+     */
     @GetMapping("/getCurrentUser")
     @ResponseBody
     public ResponseEntity<MemberDTO> getCurrentUser(@AuthenticationPrincipal CustomUser customUser) {
@@ -42,11 +72,26 @@ public class MemberController {
         return ResponseEntity.ok(member);
     }
 
+    /**
+     * methodName : findUserIdForm
+     * author : Eunsoo Lee
+     * description :
+     *
+     * @return string
+     */
     @GetMapping("/findUserIdForm")
     public String findUserIdForm() {
         return "member/findUserId";
     }
 
+    /**
+     * methodName : findUserId
+     * author : Eunsoo Lee
+     * description :
+     *
+     * @param memberDTO dto
+     * @return response entity
+     */
     @PostMapping("/findUserId")
     public ResponseEntity<?> findUserId(@RequestBody MemberDTO memberDTO) {
         MemberDTO member = memberService.findUserByDetails(memberDTO);
@@ -57,11 +102,26 @@ public class MemberController {
         }
     }
 
+    /**
+     * methodName : findUserPwdForm
+     * author : Eunsoo Lee
+     * description :
+     *
+     * @return string
+     */
     @GetMapping("/findUserPwdForm")
     public String findUserPwdForm() {
         return "member/findUserPwd";
     }
 
+    /**
+     * methodName : changePassword
+     * author : Eunsoo Lee
+     * description :
+     *
+     * @param payload
+     * @return response entity
+     */
     @PostMapping("/changePassword")
     @ResponseBody
     public ResponseEntity<String> changePassword(@RequestBody Map<String, String> payload) {
@@ -84,11 +144,31 @@ public class MemberController {
         }
     }
 
+    /**
+     * methodName : signup
+     * author : Eunsoo Lee
+     * description :
+     */
     @GetMapping("/signup")
     public void signup() {
 
     }
 
+    /**
+     * methodName : handleFileUpload
+     * author : Eunsoo Lee
+     * description :
+     *
+     * @param file
+     * @param id
+     * @param password
+     * @param name
+     * @param nickname
+     * @param age
+     * @param gender
+     * @param tel
+     * @return model and view
+     */
     @PostMapping("/signup")
     public ModelAndView handleFileUpload(@RequestParam("file") MultipartFile file, // MultipartFile file은 프로필 이미지 파일을 받기
                                          @RequestParam("id") String id,
@@ -131,6 +211,14 @@ public class MemberController {
 
     }
 
+    /**
+     * methodName : checkIdDuplicate
+     * author : Eunsoo Lee
+     * description :
+     *
+     * @param id
+     * @return response entity
+     */
     @PostMapping("/checkIdDuplicate")
     @ResponseBody
     public ResponseEntity<String> checkIdDuplicate(@RequestParam("id") String id) {
@@ -143,6 +231,11 @@ public class MemberController {
         }
     }
 
+    /**
+     * methodName : mypage
+     * author : Eunsoo Lee
+     * description :
+     */
     @GetMapping("/mypage")
     public void mypage(){
 

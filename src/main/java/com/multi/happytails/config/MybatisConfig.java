@@ -39,13 +39,6 @@ public class MybatisConfig {
         seb.setMapperLocations(res);
 
         seb.setDataSource(datasource);
-
-        // 동석 설정 (카멜케이스) (board_no -> dto (boardNo) 자동 매칭)
-        org.apache.ibatis.session.Configuration configuration = new org.apache.ibatis.session.Configuration();
-        configuration.setMapUnderscoreToCamelCase(true);
-        seb.setConfiguration(configuration);
-        //
-
         return seb.getObject();
     }
 
